@@ -1,4 +1,4 @@
-# Swagger to MSF4J Generator
+# Swagger to MSF4J Code Generator
 WSO2 Microservices Framework for Java (MSF4J) is a lightweight high performance framework for developing & running microservices. WSO2 MSF4J is one of the highest performing lightweight Java microservices frameworks. This tool will generate micro service skeleton from swagger definition. So you can use this project to convert your swagger definitions to micro service quickly.
 
 # Server Stub generation
@@ -17,9 +17,8 @@ The generated code will be at “src/gen/java” so we need to add this to the b
 </plugin>
 ```
 
-Then use “mvn swagger2msf4j:generate” command to generate the server stub.
+Then use “mvn swagger2msf4j:generate” command to generate the server stub. For that you need to add following plugin to your maven project.
 ```
-
 <plugin>
   <groupId>org.codehaus.mojo</groupId>
   <artifactId>build-helper-maven-plugin</artifactId>
