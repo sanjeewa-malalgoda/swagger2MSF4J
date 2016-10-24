@@ -65,7 +65,7 @@ public class APIGenMojo extends AbstractMojo {
             throws MojoExecutionException {
         Swagger swagger = new SwaggerParser().read(inputSpec);
         keepOnlySingleTagPerOperation(swagger);
-        CodegenConfig config = new MSF4JCodeGen();
+        CodegenConfig config = new JavaMSF4JServerCodegen();
 
         config.additionalProperties().put("invokerPackage", project.getArtifact().getArtifactId());
         config.additionalProperties().put("apiPackage", project.getArtifact().getArtifactId());
