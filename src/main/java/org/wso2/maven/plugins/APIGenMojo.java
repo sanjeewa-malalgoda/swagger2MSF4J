@@ -48,7 +48,7 @@ public class APIGenMojo extends AbstractMojo {
      */
     @Parameter(name = "output",
             property = "swagger.codegen.maven.plugin.output",
-            defaultValue = "${project.basedir}/src/")
+            defaultValue = "${project.basedir}/")
     private File output;
 
     /**
