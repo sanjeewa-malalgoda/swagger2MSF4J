@@ -153,6 +153,14 @@ public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
         return objs;
     }
 
+
+    @Override
+    public String toModelName(String name) {
+        return name+"DTO";
+    }
+
+
+
     @Override
     public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
         String basePath = resourcePath;
