@@ -189,4 +189,9 @@ public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
         co.baseName = basePath;
     }
 
+    @Override
+    public boolean shouldOverwrite(String filename) {
+        String implSourcePattern = ".*/impl/.*ServiceImpl\\.java$";
+        return !filename.matches(implSourcePattern) && super.shouldOverwrite(filename);
+    }
 }
