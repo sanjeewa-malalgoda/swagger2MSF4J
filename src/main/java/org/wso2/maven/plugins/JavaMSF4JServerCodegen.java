@@ -18,16 +18,23 @@
 
 package org.wso2.maven.plugins;
 
-import io.swagger.codegen.*;
+import io.swagger.codegen.CliOption;
+import io.swagger.codegen.CodegenConstants;
+import io.swagger.codegen.CodegenModel;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.languages.AbstractJavaJAXRSServerCodegen;
 import io.swagger.models.Operation;
-
-import java.util.*;
-
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import io.swagger.codegen.languages.AbstractJavaJAXRSServerCodegen;
 
-public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+    public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
 
     protected static final String LIBRARY_JERSEY1 = "jersey1";
     protected static final String LIBRARY_JERSEY2 = "jersey2";
@@ -128,7 +135,6 @@ public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
         //writeOptional(outputFolder, new SupportingFile("bootstrap.mustache", (implFolder + '/' + apiPackage).replace(".", "/"), "Bootstrap.java"));
         //writeOptional(outputFolder, new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"), "web.xml"));
         supportingFiles.add(new SupportingFile("StringUtil.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "StringUtil.java"));
-        supportingFiles.add(new SupportingFile("Application.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "Application.java"));
     }
 
     @Override

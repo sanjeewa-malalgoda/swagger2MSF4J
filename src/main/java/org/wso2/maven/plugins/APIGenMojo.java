@@ -71,6 +71,16 @@ public class APIGenMojo extends AbstractMojo {
         config.additionalProperties().put("apiPackage", project.getArtifact().getArtifactId());
         config.additionalProperties().put("modelPackage", project.getArtifact().getArtifactId() + ".dto");
 
+        String basePath = swagger.getBasePath();
+        String version = swagger.getInfo().getVersion();
+
+        if (basePath.contains(version)) {
+            String majorVersion = version.split("\\.")[0];
+
+            String basePathWithMajorVersion = basePath.split(version)[0] + majorVersion;
+
+            config.additionalProperties().put("basePathWithMajorVersion", basePathWithMajorVersion);
+        }
 
         config.setOutputDir(output.getAbsolutePath());
 
