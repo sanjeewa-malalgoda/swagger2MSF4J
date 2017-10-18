@@ -45,6 +45,7 @@ public class {{classname}} implements Microservice  {
    private final {{classname}}Service delegate = {{classname}}ServiceFactory.get{{classname}}();
 
 {{#operation}}
+    {{#hasOptions}}@OPTIONS{{/hasOptions}}
     @{{httpMethod}}
     {{#subresourceOperation}}@Path("{{path}}"){{/subresourceOperation}}
     {{#hasConsumes}}@Consumes({ {{#consumes}}"{{{mediaType}}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }){{/hasConsumes}}

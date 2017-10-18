@@ -1,0 +1,11 @@
+# Ignore everything in this directory
+target
+.idea
+*.iml
+.classpath
+.settings
+.project
+*.iws
+*.ipr
+*~
+*.DS_Store
