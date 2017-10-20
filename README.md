@@ -22,6 +22,7 @@ The generated code will be at “src/gen/java” so we need to add this to the b
   <version>1.0-SNAPSHOT</version>
   <configuration>
       <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
+      <autoEnableOptions>true || false</autoEnableOptions>
   </configuration>
 </plugin>
 ```

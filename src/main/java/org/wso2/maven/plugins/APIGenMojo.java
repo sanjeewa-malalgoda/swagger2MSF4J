@@ -57,6 +57,12 @@ public class APIGenMojo extends AbstractMojo {
     @Parameter(required = true)
     private String inputSpec;
 
+    /**
+     * Enable CORS support with @OPTIONS annotation
+     */
+    @Parameter(defaultValue = "false", required = false)
+    private boolean autoEnableOptions;
+
     @Parameter( defaultValue = "${project}", readonly = true )
     private MavenProject project;
 
@@ -70,6 +76,11 @@ public class APIGenMojo extends AbstractMojo {
         config.additionalProperties().put("invokerPackage", project.getArtifact().getArtifactId());
         config.additionalProperties().put("apiPackage", project.getArtifact().getArtifactId());
         config.additionalProperties().put("modelPackage", project.getArtifact().getArtifactId() + ".dto");
+
+        if(autoEnableOptions) {
+            config.additionalProperties().put("hasOptions", "");
+            getLog().info("swagger2MSF4J: CORS support is ENABLED with @OPTIONS annotation.\n");
+        }
 
         String basePath = swagger.getBasePath();
         String version = swagger.getInfo().getVersion();

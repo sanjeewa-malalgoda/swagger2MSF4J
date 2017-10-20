@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-    public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
+public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
 
     protected static final String LIBRARY_JERSEY1 = "jersey1";
     protected static final String LIBRARY_JERSEY2 = "jersey2";
@@ -52,7 +52,7 @@ import java.util.Map;
         apiTemplateFiles.put("apiService.mustache", ".java");
         apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
         apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
-       // apiTemplateFiles.put("application.mustache", ".java");
+        // apiTemplateFiles.put("application.mustache", ".java");
         apiTestTemplateFiles.clear(); // TODO: add test template
 
         // clear model and api doc template as this codegen
@@ -75,29 +75,27 @@ import java.util.Map;
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "msf4j"; // TODO should be renamed as "jaxrs-jersey"
     }
 
     @Override
-    public String getHelp()
-    {
+    public String getHelp() {
         return "Generates a Java JAXRS Server application based on Jersey framework.";
     }
 
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         super.postProcessModelProperty(model, property);
-        if("null".equals(property.example)) {
+        if ("null".equals(property.example)) {
             property.example = null;
         }
 
         //Add imports for Jackson
-        if(!BooleanUtils.toBoolean(model.isEnum)) {
+        if (!BooleanUtils.toBoolean(model.isEnum)) {
             model.imports.add("JsonProperty");
 
-            if(BooleanUtils.toBoolean(model.hasEnums)) {
+            if (BooleanUtils.toBoolean(model.hasEnums)) {
                 model.imports.add("JsonValue");
             }
         }
@@ -112,14 +110,14 @@ import java.util.Map;
             setLibrary(DEFAULT_LIBRARY);
         }
 
-        if ( additionalProperties.containsKey(CodegenConstants.IMPL_FOLDER)) {
+        if (additionalProperties.containsKey(CodegenConstants.IMPL_FOLDER)) {
             implFolder = (String) additionalProperties.get(CodegenConstants.IMPL_FOLDER);
         }
 
         if ("joda".equals(dateLibrary)) {
             supportingFiles.add(new SupportingFile("JodaDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("JodaLocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JodaLocalDateProvider.java"));
-        } else if ( dateLibrary.startsWith("java8") ) {
+        } else if (dateLibrary.startsWith("java8")) {
             supportingFiles.add(new SupportingFile("OffsetDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "OffsetDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("LocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
         }
@@ -142,7 +140,7 @@ import java.util.Map;
         objs = super.postProcessModelsEnum(objs);
 
         //Add imports for Jackson
-        List<Map<String, String>> imports = (List<Map<String, String>>)objs.get("imports");
+        List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
         List<Object> models = (List<Object>) objs.get("models");
         for (Object _mo : models) {
             Map<String, Object> mo = (Map<String, Object>) _mo;
@@ -162,9 +160,8 @@ import java.util.Map;
 
     @Override
     public String toModelName(String name) {
-        return name+"DTO";
+        return name + "DTO";
     }
-
 
 
     @Override
