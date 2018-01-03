@@ -26,7 +26,6 @@ import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.languages.AbstractJavaJAXRSServerCodegen;
 import io.swagger.models.Operation;
-import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -70,18 +69,22 @@ public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
         library.setEnum(supportedLibraries);
         library.setDefault(DEFAULT_LIBRARY);
 
+        //MSF4J uses google gson as the JSON converter. 
+        additionalProperties.remove("jackson");
+        additionalProperties.put("gson", "true");
+
         cliOptions.add(library);
 
     }
 
     @Override
     public String getName() {
-        return "msf4j"; // TODO should be renamed as "jaxrs-jersey"
+        return "msf4j";
     }
 
     @Override
     public String getHelp() {
-        return "Generates a Java JAXRS Server application based on Jersey framework.";
+        return "Generates a Java JAXRS Server application based on MSF4J framework.";
     }
 
     @Override
@@ -91,14 +94,8 @@ public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
             property.example = null;
         }
 
-        //Add imports for Jackson
-        if (!BooleanUtils.toBoolean(model.isEnum)) {
-            model.imports.add("JsonProperty");
-
-            if (BooleanUtils.toBoolean(model.hasEnums)) {
-                model.imports.add("JsonValue");
-            }
-        }
+        //MSF4J uses google gson as the JSON converter. So we need to use gson's SerializedName annotation
+        model.imports.add("SerializedName");
     }
 
     @Override
@@ -128,7 +125,10 @@ public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
         supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiOriginFilter.java"));
         supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiResponseMessage.java"));
         supportingFiles.add(new SupportingFile("NotFoundException.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
-        supportingFiles.add(new SupportingFile("jacksonJsonProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JacksonJsonProvider.java"));
+        if (additionalProperties.containsKey("jackson")) {
+            supportingFiles.add(new SupportingFile("jacksonJsonProvider.mustache",
+                    (sourceFolder + '/' + apiPackage).replace(".", "/"), "JacksonJsonProvider.java"));
+        }
         //supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "RFC3339DateFormat.java"));
         //writeOptional(outputFolder, new SupportingFile("bootstrap.mustache", (implFolder + '/' + apiPackage).replace(".", "/"), "Bootstrap.java"));
         //writeOptional(outputFolder, new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"), "web.xml"));
