@@ -195,6 +195,8 @@ public class JavaMSF4JServerCodegen extends AbstractJavaJAXRSServerCodegen {
     @Override
     public boolean shouldOverwrite(String filename) {
         String implSourcePattern = ".*/impl/.*ServiceImpl\\.java$";
-        return !filename.matches(implSourcePattern) && super.shouldOverwrite(filename);
+        String factorySourcePattern = ".*/factories/.*ServiceFactory\\.java$";
+        return !filename.matches(implSourcePattern) && !filename.matches(factorySourcePattern) && super
+                .shouldOverwrite(filename);
     }
 }
