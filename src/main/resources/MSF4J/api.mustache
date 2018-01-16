@@ -64,6 +64,8 @@ public class {{classname}} implements Microservice  {
         {{/hasMore}}{{/responses}} })
     public Response {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{/allParams}} {{#hasParams}},{{/hasParams}}@Context Request request)
     throws NotFoundException {
+        {{#allParams}}{{#defaultValue}}{{paramName}}={{paramName}}==null?{{{dataType}}}.valueOf("{{defaultValue}}"):{{paramName}};
+        {{/defaultValue}}{{/allParams}}
         return delegate.{{nickname}}({{#allParams}}{{#isFile}}{{paramName}}InputStream, {{paramName}}Detail{{/isFile}}{{^isFile}}{{paramName}}{{/isFile}}{{#hasMore}},{{/hasMore}}{{/allParams}}{{#hasParams}},{{/hasParams}}request);
     }
 {{/operation}}
